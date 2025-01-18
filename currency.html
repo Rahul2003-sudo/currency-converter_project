@@ -1,0 +1,628 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Currency Converter</title>
+    <link rel="stylesheet" href="currencystyles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="converter-container">
+            <h1>Currency Converter</h1>
+            <form id="converterForm">
+                <label for="amount">Enter amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                
+                <label for="fromCurrency">From:</label>
+                <select id="fromCurrency" name="fromCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <label for="toCurrency">To:</label>
+                <select id="toCurrency" name="toCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <button type="submit">Convert</button>
+            </form>
+        </div>
+
+        <div class="output-section" id="outputSection">
+            <h2>Conversion Result:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Converted Value</th>
+                    </tr>
+                </thead>
+                <tbody id="conversionResult"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = '0c1d04c2f2b94d2777cbb6a5'; // Replace with your actual API key
+        const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`; // Example endpoint
+        
+        // Fetch exchange rates when the page loads
+        let exchangeRates = {};
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                exchangeRates = data.rates; // Store the rates in the exchangeRates object
+            })
+            .catch(error => console.error('Error fetching exchange rates:', error));
+        
+        const currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£",
+            "INR": "₹",
+            "JPY": "¥",
+            "AUD": "A$",
+            "CNY": "¥",
+            "CAD": "C$",
+            "CHF": "CHF",
+            "NZD": "NZ$",
+            "MXN": "$",
+            "SGD": "S$",
+            "HKD": "HK$",
+            "NOK": "kr",
+            "SEK": "kr",
+            "ZAR": "R"
+        };
+
+        document.getElementById("converterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+        
+            const amount = parseFloat(document.getElementById("amount").value);
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+        
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+        
+            // Get the conversion rates dynamically
+            const conversionRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+            const convertedValue = (amount * conversionRate).toFixed(2);
+        
+            const resultHTML = `
+                <tr>
+                    <td>${currencySymbols[fromCurrency]}${amount}</td>
+                    <td>${fromCurrency}</td>
+                    <td>${toCurrency}</td>
+                    <td>${currencySymbols[toCurrency]}${convertedValue}</td>
+                </tr>
+            `;
+        
+            document.getElementById("conversionResult").innerHTML = resultHTML;
+            document.getElementById("outputSection").style.display = "block";
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+<!-- <!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Currency Converter</title>
+    <link rel="stylesheet" href="currencystyles.css">
+    
+</head>
+<body>
+    <div class="main-container">
+        <div class="converter-container">
+            <h1>Currency Converter</h1>
+            <form id="converterForm">
+                <label for="amount">Enter amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                
+                <label for="fromCurrency">From:</label>
+                <select id="fromCurrency" name="fromCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <label for="toCurrency">To:</label>
+                <select id="toCurrency" name="toCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <button type="submit">Convert</button>
+            </form>
+        </div>
+
+        <div class="output-section" id="outputSection" style="display: none;">
+            <h2>Conversion Result:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Converted Value</th>
+                    </tr>
+                </thead>
+                <tbody id="conversionResult"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = '0c1d04c2f2b94d2777cbb6a5'; // Replace with your actual API key
+        const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`; // Example endpoint
+        
+        // Fetch exchange rates when the page loads
+        let exchangeRates = {};
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                exchangeRates = data.rates; // Store the rates in the exchangeRates object
+            })
+            .catch(error => console.error('Error fetching exchange rates:', error));
+        
+        const currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£",
+            "INR": "₹",
+            "JPY": "¥",
+            "AUD": "A$",
+            "CNY": "¥",
+            "CAD": "C$",
+            "CHF": "CHF",
+            "NZD": "NZ$",
+            "MXN": "$",
+            "SGD": "S$",
+            "HKD": "HK$",
+            "NOK": "kr",
+            "SEK": "kr",
+            "ZAR": "R"
+        };
+
+        document.getElementById("converterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+        
+            const amount = parseFloat(document.getElementById("amount").value);
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+        
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+        
+            // Get the conversion rates dynamically
+            const conversionRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+            const convertedValue = (amount * conversionRate).toFixed(2);
+        
+            const resultHTML = `
+                <tr>
+                    <td>${currencySymbols[fromCurrency]}${amount}</td>
+                    <td>${fromCurrency}</td>
+                    <td>${toCurrency}</td>
+                    <td>${currencySymbols[toCurrency]}${convertedValue}</td>
+                </tr>
+            `;
+        
+            document.getElementById("conversionResult").innerHTML = resultHTML;
+            document.getElementById("outputSection").style.display = "block";
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Currency Converter</title>
+    <link rel="stylesheet" href="currencystyles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Currency Converter</div>
+            <ul class="nav-links">
+                <li><a href="#converter">Convert</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hero-section">
+            <h1>Welcome to the Advanced Currency Converter</h1>
+            <p>Convert your currencies quickly and easily with our state-of-the-art converter.</p>
+            <a href="#converter" class="cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="converter" class="main-container">
+            <div class="converter-container">
+                <h2>Currency Converter</h2>
+                <form id="converterForm">
+                    <label for="amount">Enter amount:</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                    
+                    <label for="fromCurrency">From:</label>
+                    <select id="fromCurrency" name="fromCurrency">
+                        <option value="USD">US Dollar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                        <option value="GBP">British Pound (GBP)</option>
+                        <option value="INR">Indian Rupee (INR)</option>
+                        <option value="JPY">Japanese Yen (JPY)</option>
+                        <option value="AUD">Australian Dollar (AUD)</option>
+                        <option value="CNY">Chinese Yuan (CNY)</option>
+                        <option value="CAD">Canadian Dollar (CAD)</option>
+                        <option value="CHF">Swiss Franc (CHF)</option>
+                        <option value="NZD">New Zealand Dollar (NZD)</option>
+                        <option value="MXN">Mexican Peso (MXN)</option>
+                        <option value="SGD">Singapore Dollar (SGD)</option>
+                        <option value="HKD">Hong Kong Dollar (HKD)</option>
+                        <option value="NOK">Norwegian Krone (NOK)</option>
+                        <option value="SEK">Swedish Krona (SEK)</option>
+                        <option value="ZAR">South African Rand (ZAR)</option>
+                    </select>
+                    
+                    <label for="toCurrency">To:</label>
+                    <select id="toCurrency" name="toCurrency">
+                        <option value="USD">US Dollar (USD)</option>
+                        <option value="EUR">Euro (EUR)</option>
+                        <option value="GBP">British Pound (GBP)</option>
+                        <option value="INR">Indian Rupee (INR)</option>
+                        <option value="JPY">Japanese Yen (JPY)</option>
+                        <option value="AUD">Australian Dollar (AUD)</option>
+                        <option value="CNY">Chinese Yuan (CNY)</option>
+                        <option value="CAD">Canadian Dollar (CAD)</option>
+                        <option value="CHF">Swiss Franc (CHF)</option>
+                        <option value="NZD">New Zealand Dollar (NZD)</option>
+                        <option value="MXN">Mexican Peso (MXN)</option>
+                        <option value="SGD">Singapore Dollar (SGD)</option>
+                        <option value="HKD">Hong Kong Dollar (HKD)</option>
+                        <option value="NOK">Norwegian Krone (NOK)</option>
+                        <option value="SEK">Swedish Krona (SEK)</option>
+                        <option value="ZAR">South African Rand (ZAR)</option>
+                    </select>
+                    
+                    <button type="submit">Convert</button>
+                </form>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <h2>Conversion Result:</h2>
+                <div class="result-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Converted Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="conversionResult"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Currency Converter. All Rights Reserved.</p>
+            <p>Contact us at <a href="mailto:support@currencyconverter.com">support@currencyconverter.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = '0c1d04c2f2b94d2777cbb6a5'; // Replace with your actual API key
+        const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`; // Example endpoint
+        
+        // Fetch exchange rates when the page loads
+        let exchangeRates = {};
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                exchangeRates = data.rates; // Store the rates in the exchangeRates object
+            })
+            .catch(error => console.error('Error fetching exchange rates:', error));
+        
+        const currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£",
+            "INR": "₹",
+            "JPY": "¥",
+            "AUD": "A$",
+            "CNY": "¥",
+            "CAD": "C$",
+            "CHF": "CHF",
+            "NZD": "NZ$",
+            "MXN": "$",
+            "SGD": "S$",
+            "HKD": "HK$",
+            "NOK": "kr",
+            "SEK": "kr",
+            "ZAR": "R"
+        };
+
+        document.getElementById("converterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+        
+            const amount = parseFloat(document.getElementById("amount").value);
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+        
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+        
+            // Get the conversion rates dynamically
+            const conversionRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+            const convertedValue = (amount * conversionRate).toFixed(2);
+        
+            const resultHTML = `
+                <tr>
+                    <td>${currencySymbols[fromCurrency]}${amount}</td>
+                    <td>${fromCurrency}</td>
+                    <td>${toCurrency}</td>
+                    <td>${currencySymbols[toCurrency]}${convertedValue}</td>
+                </tr>
+            `;
+        
+            document.getElementById("conversionResult").innerHTML = resultHTML;
+            document.getElementById("outputSection").style.display = "block";
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Currency Converter</title>
+    <link rel="stylesheet" href="currencystyles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1 class="logo">Advanced Currency Converter</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Hero Section -->
+     
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>Your Gateway to Currency Conversion</h2>
+            <p>Convert currencies quickly and easily with our advanced converter.</p>
+            <a href="#converter" class="cta-button">Get Started</a>
+        </div>
+    </section>
+    
+
+
+    <div class="main-container">
+        <div class="converter-container">
+            <h2>Currency Converter</h2>
+            <form id="converterForm">
+                <label for="amount">Enter amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+                
+                <label for="fromCurrency">From:</label>
+                <select id="fromCurrency" name="fromCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <label for="toCurrency">To:</label>
+                <select id="toCurrency" name="toCurrency">
+                    <option value="USD">US Dollar (USD)</option>
+                    <option value="EUR">Euro (EUR)</option>
+                    <option value="GBP">British Pound (GBP)</option>
+                    <option value="INR">Indian Rupee (INR)</option>
+                    <option value="JPY">Japanese Yen (JPY)</option>
+                    <option value="AUD">Australian Dollar (AUD)</option>
+                    <option value="CNY">Chinese Yuan (CNY)</option>
+                    <option value="CAD">Canadian Dollar (CAD)</option>
+                    <option value="CHF">Swiss Franc (CHF)</option>
+                    <option value="NZD">New Zealand Dollar (NZD)</option>
+                    <option value="MXN">Mexican Peso (MXN)</option>
+                    <option value="SGD">Singapore Dollar (SGD)</option>
+                    <option value="HKD">Hong Kong Dollar (HKD)</option>
+                    <option value="NOK">Norwegian Krone (NOK)</option>
+                    <option value="SEK">Swedish Krona (SEK)</option>
+                    <option value="ZAR">South African Rand (ZAR)</option>
+                </select>
+                
+                <button type="submit">Convert</button>
+            </form>
+        </div>
+    
+        <div class="output-section" id="outputSection" style="display: none;">
+            <h2>Conversion Result:</h2>
+            <div class="result-card" id="conversionResult">
+                <!-- Result will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 Advanced Currency Converter. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = '0c1d04c2f2b94d2777cbb6a5'; // Replace with your actual API key
+        const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`; // Example endpoint
+        
+        // Fetch exchange rates when the page loads
+        let exchangeRates = {};
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                exchangeRates = data.rates; // Store the rates in the exchangeRates object
+            })
+            .catch(error => console.error('Error fetching exchange rates:', error));
+        
+        const currencySymbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£",
+            "INR": "₹",
+            "JPY": "¥",
+            "AUD": "A$",
+            "CNY": "¥",
+            "CAD": "C$",
+            "CHF": "CHF",
+            "NZD": "NZ$",
+            "MXN": "$",
+            "SGD": "S$",
+            "HKD": "HK$",
+            "NOK": "kr",
+            "SEK": "kr",
+            "ZAR": "R"
+        };
+
+        document.getElementById("converterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const amount = parseFloat(document.getElementById("amount").value);
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+
+            // Get the conversion rates dynamically
+            const conversionRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+            const convertedValue = (amount * conversionRate).toFixed(2);
+
+            const resultHTML = `
+                <div class="result-item">
+                    <div class="result-amount">${currencySymbols[fromCurrency]}${amount}</div>
+                    <div class="result-details">
+                        <div class="result-from">${fromCurrency}</div>
+                        <div class="result-to">${toCurrency}</div>
+                    </div>
+                    <div class="result-converted">${currencySymbols[toCurrency]}${convertedValue}</div>
+                </div>
+            `;
+
+            document.getElementById("conversionResult").innerHTML = resultHTML;
+            document.getElementById("outputSection").style.display = "block";
+        });
+    </script>
+</body>
+</html>
